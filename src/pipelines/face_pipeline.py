@@ -9,18 +9,17 @@ import streamlit as st
 from src.database.db import get_all_students
 
 
+import face_recognition_models
+
 @st.cache_resource
 def load_dlib_models():
-    detector = dlib.get_frontal_face_detector() 
+    detector = dlib.get_frontal_face_detector()
 
+    sp_path = face_recognition_models.pose_predictor_model_location()
+    facerec_path = face_recognition_models.face_recognition_model_location()
 
-    sp = dlib.shape_predictor(
-        face_recognition_models.pose_predictor_model_location()
-    )
-
-    facerec = dlib.face_recognition_model_v1(
-        face_recognition_models.face_recognition_model_location()
-    )
+    sp = dlib.shape_predictor(sp_path)
+    facerec = dlib.face_recognition_model_v1(facerec_path)
 
     return detector, sp, facerec
 
